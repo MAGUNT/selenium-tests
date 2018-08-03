@@ -19,7 +19,7 @@ public abstract class SeleniumTestCaseBase {
 
     @BeforeEach
     public void startBrowser() {
-    //	System.setProperty(NAME_SYSTEM_PROPERTY, VALUE_SYSTEM_PROPERTY);
+        System.setProperty(NAME_SYSTEM_PROPERTY, VALUE_SYSTEM_PROPERTY);
         this.driver = new ChromeDriver();
     }
 

@@ -2,6 +2,7 @@ package assignment2;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import base.SeleniumTestCaseBase;
@@ -17,14 +18,14 @@ public class SeleniumTestCase2NopCommerce extends SeleniumTestCaseBase  {
     	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     	
     	//Check if wish list is empty
-        driver.get(NOP_COMMERCE_URL + WISHLIST_URL);        
+        driver.get(NOP_COMMERCE_URL + WISHLIST_URL);       
     	if (driver.findElements(By.className("no-data")).size() != 0)
         	LOG.info("Wish list is empty");
         else {
         	LOG.info("Wish list is not empty");	
-        	driver.quit();
+        	Assert.assertTrue(false);
         }
-        
+    	
         //Add item to wish list
         driver.findElement(By.id("small-searchterms")).sendKeys(ITEM_TO_WISHLIST);       
         driver.findElement(By.className("search-box-button")).click();
@@ -36,7 +37,7 @@ public class SeleniumTestCase2NopCommerce extends SeleniumTestCaseBase  {
     		LOG.info("Item was added to wish list successful");
         else {
         	LOG.info("Item was not added to wish list");
-        	driver.quit();
+        	Assert.assertTrue(false);
         }
     	
     	//Check if shopping cart is empty
@@ -45,7 +46,7 @@ public class SeleniumTestCase2NopCommerce extends SeleniumTestCaseBase  {
         	LOG.info("Shopping cart is empty");
         else {
         	LOG.info("Shopping cart is not empty");	
-        	driver.quit();
+        	Assert.assertTrue(false);
         }
     	
     	//Add item to shopping cart
@@ -59,7 +60,7 @@ public class SeleniumTestCase2NopCommerce extends SeleniumTestCaseBase  {
         	LOG.info("Item was added to shopping cart successful");
         else {
         	LOG.info("Item was not added to shopping cart");	
-        	driver.quit();
+        	Assert.assertTrue(false);
         }
     	
     	driver.findElement(By.className("continue-shopping-button")).click();

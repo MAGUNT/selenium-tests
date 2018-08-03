@@ -14,12 +14,15 @@ public class SeleniumTestCase3NopCommerce extends SeleniumTestCaseBase {
     private static final String SEARCH_INPUT_ID = "small-searchterms";
     private static final String BOOK_SEARCH     = "Fahrenheit 451";
     private static final String WISH_LIST       = "wishlist";
+
+
     private static final String WISH_LIST_BUTTON = String.format(
                     "//a[contains(text(), '%s')]" +
                     "/parent::h2" +
                     "/parent::div" +
                     "/descendant::input[contains(@title, 'wishlist')]",
             BOOK_SEARCH);
+
 
 
     private static final String WISH_LIST_BOOK_NAME = String.format(
@@ -32,7 +35,7 @@ public class SeleniumTestCase3NopCommerce extends SeleniumTestCaseBase {
      *
      * Vaya la página Wishlist
      *
-     * Verifique que se despliega el mensaje “The wishlist is empty!�?
+     * Verifique que se despliega el mensaje “The wishlist is empty!�?
      * Vaya al campo de búsqueda de artículos utilizando el id= small-searchterms.
      * Busque el libro Fahrenheit 451.
      * Agregue el libro al Wishlist.

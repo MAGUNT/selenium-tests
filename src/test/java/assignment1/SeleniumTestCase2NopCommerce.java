@@ -1,13 +1,9 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+package assignment1;
+import base.SeleniumTestCaseBase;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -40,7 +36,6 @@ public class SeleniumTestCase2NopCommerce extends SeleniumTestCaseBase {
      * (nopCommerce).
      * Despliegue un mensaje indicando si el caso se ejecutó correctamente.
      */
-    @Override
     @Test
     public void TestCase() {
         getDriver().get(NOP_COMMERCE_URL);

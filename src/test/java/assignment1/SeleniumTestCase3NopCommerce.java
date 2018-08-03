@@ -1,8 +1,9 @@
+package assignment1;
 
+import base.SeleniumTestCaseBase;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import java.util.logging.Logger;
 
 public class SeleniumTestCase3NopCommerce extends SeleniumTestCaseBase {
@@ -13,12 +14,15 @@ public class SeleniumTestCase3NopCommerce extends SeleniumTestCaseBase {
     private static final String SEARCH_INPUT_ID = "small-searchterms";
     private static final String BOOK_SEARCH     = "Fahrenheit 451";
     private static final String WISH_LIST       = "wishlist";
+
+
     private static final String WISH_LIST_BUTTON = String.format(
                     "//a[contains(text(), '%s')]" +
                     "/parent::h2" +
                     "/parent::div" +
                     "/descendant::input[contains(@title, 'wishlist')]",
             BOOK_SEARCH);
+
 
 
     private static final String WISH_LIST_BOOK_NAME = String.format(
@@ -31,14 +35,13 @@ public class SeleniumTestCase3NopCommerce extends SeleniumTestCaseBase {
      *
      * Vaya la página Wishlist
      *
-     * Verifique que se despliega el mensaje “The wishlist is empty!”
+     * Verifique que se despliega el mensaje “The wishlist is empty!�?
      * Vaya al campo de búsqueda de artículos utilizando el id= small-searchterms.
      * Busque el libro Fahrenheit 451.
      * Agregue el libro al Wishlist.
      * Vaya nuevamente al Wishlist y verifique que el libro ha sido incluido
      * Despliegue un mensaje indicando si el caso se ejecutó correctamente.
      */
-    @Override
     @Test
     public void TestCase() {
         getDriver().get(NOP_COMMERCE_URL);
@@ -51,7 +54,7 @@ public class SeleniumTestCase3NopCommerce extends SeleniumTestCaseBase {
         waitToClickElement(By.xpath(WISH_LIST_BUTTON)).click();
         waitToClickElement(By.linkText(WISH_LIST)).click();
         waitToFoundElement(By.xpath(WISH_LIST_BOOK_NAME));
-        LOG.info("Test case 2 completed successfully");
+        LOG.info("Test case 3 completed successfully");
     }
 
 }

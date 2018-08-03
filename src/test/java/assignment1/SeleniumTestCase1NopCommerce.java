@@ -1,16 +1,8 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+package assignment1;
+
+import base.SeleniumTestCaseBase;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.Arrays;
 import java.util.logging.Logger;
-
 
 public class SeleniumTestCase1NopCommerce extends SeleniumTestCaseBase {
 
@@ -24,13 +16,12 @@ public class SeleniumTestCase1NopCommerce extends SeleniumTestCaseBase {
     /**
      * Abra el navegador (Chrome o Firefox)
      *
-     * Conéctese al sitio web http://demo.nopcommerce.com
-     * Verifique que el title sea “nopCommerce demo store”
+     * Conactese al sitio web http://demo.nopcommerce.com
+     * Verifique que el title sea NopCommerce demo store
      * Despliegue un mensaje indicando si el title es correcto.
      * Espere 5 segundos
      * Cierre el browser
      */
-    @Override
     @Test
     public void TestCase() {
         getDriver().get(NOP_COMMERCE_URL);
@@ -46,8 +37,8 @@ public class SeleniumTestCase1NopCommerce extends SeleniumTestCaseBase {
     
     private void checkTitle() {    	
     	if (getDriver().getTitle().equals(PAGE_TITLE))
-    		LOG.info("El t�tulo si es '" + PAGE_TITLE + "'");
+    		LOG.info("El titulo si es '" + PAGE_TITLE + "'");
     	else
-    		LOG.warning("El t�tulo no es '" + PAGE_TITLE + "'");
+    		LOG.warning("El titulo no es '" + PAGE_TITLE + "'");
     }
 }

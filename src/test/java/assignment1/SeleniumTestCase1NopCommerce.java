@@ -24,8 +24,6 @@ public class SeleniumTestCase1NopCommerce extends SeleniumTestCaseBase {
      */
     @Test
     public void TestCase() {
-        getDriver().get(NOP_COMMERCE_URL);
-
         waitExact(LOAD_PAGE_WAIT_TIME);
         checkTitle();
         waitExact(CLOSE_PAGE_WAIT_TIME);

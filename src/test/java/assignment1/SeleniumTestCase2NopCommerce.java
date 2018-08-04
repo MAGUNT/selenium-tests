@@ -38,7 +38,6 @@ public class SeleniumTestCase2NopCommerce extends SeleniumTestCaseBase {
      */
     @Test
     public void TestCase() {
-        getDriver().get(NOP_COMMERCE_URL);
         Arrays.stream(CATEGORIES_LINK_TEXT)
                 .forEach(this::navegateToCategory);
 

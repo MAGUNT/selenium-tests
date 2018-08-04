@@ -27,9 +27,21 @@ public class SeleniumTestCase1NopCommerce extends SeleniumTestCaseBase {
             "Gift Cards"
     };
 
+    /**
+     * Abra el navegador (Chrome o Firefox)
+     *
+     * Conéctese al sitio web http://demo.nopcommerce.com
+     * Ingrese a las categorías Computers, Electronics, Apparel, Digital downloads, Books,
+     * Jewelry and Gift Cards.
+     * En cada caso, espere a que la página se haya desplegado completamente antes de ir a
+     * la siguiente categoría. No es válido esperar cantidades fijas de tiempo (por ejemplo: 3
+     * segundos).
+     * Vuelva a la página principal haciendo click en la imagen de la esquina superior izquierda
+     * (nopCommerce).
+     * Despliegue un mensaje indicando si el caso se ejecutó correctamente.
+     */
     @Test
-    public void TestCase() {
-        driver.get(NOP_COMMERCE_URL);
+    void testCase() {
         Arrays.stream(CATEGORIES_LINK_TEXT)
                 .forEach(this::navegateToCategory);
 

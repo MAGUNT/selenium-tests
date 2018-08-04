@@ -1,5 +1,6 @@
 package assignment2;
 import java.util.logging.Logger;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import base.SeleniumTestCaseBase;

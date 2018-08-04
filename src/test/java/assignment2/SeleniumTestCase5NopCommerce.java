@@ -4,91 +4,54 @@ import base.SeleniumTestCaseBase;
 import dal.Repositories;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import test_data_models.Product;
+
 import java.util.List;
+import java.util.logging.Logger;
 
 
 class SeleniumTestCase5NopCommerce extends SeleniumTestCaseBase {
-    private static final String UPDATE_WISH_LIST_CLASS         = "update-wishlist-button";
-    private static final String WISH_LIST_CLASS                = "ico-wishlist";
-    private static final String WISH_LIST_EMPTY_MSG            = "The wishlist is empty!";
-    private static final String NO_DATA_SELECTOR               = ".no-data";
-    private static final String SEARCH_INPUT_ID                = "small-searchterms";
-    private static final String WISH_LIST                      = "wishlist";
-    private static final String WISH_LIST_FIRST_ROW            = ".cart tbody tr:first-of-type";
-    private static final String WISH_LIST_PRODUCT_NAME_A       = WISH_LIST_FIRST_ROW + " .product-name";
-    private static final String WISH_LIST_PRODUCT_QTY_INPUT    = WISH_LIST_FIRST_ROW + " .qty-input";
-    private static final String WISH_LIST_PRODUCT_REMOVE_INPUT = WISH_LIST_FIRST_ROW + " .remove-from-cart input";
-    private static final String WISH_LIST_PRODUCT_PRICE        = WISH_LIST_FIRST_ROW + " .product-subtotal";
-    private static final String WISH_LIST_BUTTON_XPATH =
-            "//*[contains(@class, \"item-box\")]" +
-            "/*[descendant::a[contains(text(), \"%s\")]]" +
-            "/descendant::input[contains(@class, \"add-to-wishlist-button\")]";
+    private static final Logger LOG = Logger.getLogger(SeleniumTestCase2NopCommerce.class.getName());
 
+
+    /**
+     * Vaya la página Wishlist
+     *
+     * Verifique que se despliega el mensaje “The wishlist is empty!”
+     * Vaya al campo de búsqueda de artículos utilizando el id= small-searchterms.
+     * Busque el Producto indicado en la primera columna del Excel llamado Parametros.xls.
+     * Agregue el Producto al Wishlist.
+     * Vaya nuevamente al Wishlist y modifique el campo Qty para que incluya la cantidad que
+     * se indica en la segunda columna del Excel Parametros.xls.
+     * Verifique que el total es el indicado en la columna Total del Excel.
+     * Remueva el Producto del Wishlist y actualice la lista (Update Wishlist).
+     * Despliegue un mensaje indicando que el registro se procesó correctamente.
+     * El procedimiento anterior debe ejecutarse tantas veces como filas haya en el Excel
+     * suministrado.
+     * @param product producto
+     */
     @ParameterizedTest
     @MethodSource("testCaseProvider")
     void testCase(final Product product) {
-
-        connectToSite();
         checkWishListIsEmpty();
-        searchProduct(product);
-        addToWishList(product);
 
-        waitToClickElement(By.linkText(WISH_LIST)).click();
+        searchProduct(product.getName());
+        addToWishList(product.getName());
+        checkProduct(product.getName());
 
-        checkProduct(product);
-        updateQuantity(product);
-        checkTotal(product);
-        removeProduct();
-    }
-
-    private void removeProduct() {
-        waitToClickElement(By.cssSelector(WISH_LIST_PRODUCT_REMOVE_INPUT)).click();
-        waitToClickElement(By.className(UPDATE_WISH_LIST_CLASS)).click();
-    }
-
-    private void checkTotal(final Product product) {
-        assertHasText(By.cssSelector(WISH_LIST_PRODUCT_PRICE), product.getTotal());
-    }
-
-    private void checkProduct(final Product product) {
-        assertHasText(By.cssSelector(WISH_LIST_PRODUCT_NAME_A), product.getName());
-    }
-
-    private void updateQuantity(final Product product) {
-        WebElement qtyInput = waitToClickElement(By.cssSelector(WISH_LIST_PRODUCT_QTY_INPUT));
-        qtyInput.clear();
-        qtyInput.sendKeys(product.getQuantity());
+        updateQuantity(product.getQuantity());
         updateWishList();
+        checkTotal(product.getTotal());
+        removeProduct();
+
+        LOG.info("Test case 5 completed successfully");
     }
 
-    private void updateWishList() {
-        waitToClickElement(By.className(UPDATE_WISH_LIST_CLASS)).click();
-    }
-
-    private void checkWishListIsEmpty() {
-        waitToClickElement(By.className(WISH_LIST_CLASS)).click();
-        assertHasText(By.cssSelector(NO_DATA_SELECTOR), WISH_LIST_EMPTY_MSG);
-    }
-
-    private void searchProduct(final Product product) {
-        WebElement searchInput = waitToClickElement(By.id(SEARCH_INPUT_ID));
-        searchInput.sendKeys(product.getName());
-        searchInput.submit();
-    }
-
-    private void addToWishList(final Product product) {
-        final String xpath = String.format(WISH_LIST_BUTTON_XPATH, scapeString(product.getName()));
-        waitToClickElement(By.xpath(xpath)).click();
-    }
-
-    private static List<Product> testCaseProvider() {
+    /**
+     * Proveedor del data driven test
+     * @return productos
+     */
+    static List<Product> testCaseProvider() {
         return Repositories.getProductRepo().getAll();
-    }
-
-    private String scapeString(final String string) {
-        return string.replace("\"", "\\\"");
     }
 }

@@ -44,7 +44,6 @@ public class SeleniumTestCase3NopCommerce extends SeleniumTestCaseBase {
      */
     @Test
     public void TestCase() {
-        getDriver().get(NOP_COMMERCE_URL);
         waitToClickElement(By.className(WISH_LIST_CLASS)).click();
 
         WebElement searchInput = waitToFoundElement(By.id(SEARCH_INPUT_ID));

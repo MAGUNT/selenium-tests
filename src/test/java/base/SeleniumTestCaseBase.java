@@ -13,8 +13,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import test_data_models.Product;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public abstract class SeleniumTestCaseBase {
     private static final String ADD_TOCART_BUTTON_CLASS        = ".wishlist-add-to-cart-button";
@@ -35,13 +41,13 @@ public abstract class SeleniumTestCaseBase {
     private static final String WISH_LIST_ADD_CART_INPUT       = WISH_LIST_FIRST_ROW + " .add-to-cart input";
     private static final String WISH_LIST_BUTTON_XPATH  =
             "//*[contains(@class, \"item-box\")]" +
-                    "/*[descendant::a[contains(text(), \"%s\")]]" +
+                    "/*[descendant::a[contains(text(), %s)]]" +
                     "/descendant::input[contains(@class, \"add-to-wishlist-button\")]";
 
 
 
     private final static String NAME_SYSTEM_PROPERTY	= "webdriver.chrome.driver";
-    private final static String VALUE_SYSTEM_PROPERTY	= "./src/test/java/assets/chromedriver.exe";
+    private final static String VALUE_SYSTEM_PROPERTY	= "./src/test/java/assets/chromedriver";
     private final static int MAX_WAITING_TIME           =  5;
     protected final static String NOP_COMMERCE_URL      = "http://demo.nopcommerce.com/";
 
@@ -253,14 +259,34 @@ public abstract class SeleniumTestCaseBase {
 
 
     /**
-     * Escapa " de un string
+     * Escapa " y  de un string
      * @param string texto
      * @return texto escapado
      */
-    public String scapeString(final String string) {
-        return string.replace("\"", "\\\"");
+    private String scapeString(final String string) {
+        if(!string.contains("\"") && !string.contains("'")) {
+            return "\"" + string + "\"";
+        }
+        Matcher matcher = Pattern.compile("[^'\"]+|['\"]").matcher(string);
+        List<String> matches = new ArrayList<>();
+        while ( matcher.find() ) {
+            matches.add(matcher.group(0));
+        }
+
+        return "concat(" + matches.stream().map(this::mapMatch)
+                .collect(Collectors.joining(",")) + ")";
     }
 
+    private String mapMatch(String string) {
+        if (string.equals("'"))  {
+            return "\"\'\""; // output "'"
+        }
+
+        if (string.equals("\"")) {
+            return "'\"'"; // output '"'
+        }
+        return "'" + string + "'";
+    }
     /**
      * Verifica que un producto se encuentre en la primera fila del wishlist o shopping cart
      * @param name nombre del producto
